@@ -3,3 +3,5 @@ http://github.com/danirus/django-contactme/
 
 A reusable Django app to add a contact form that hits the database only after 
 users confirm their email addresses.
+
+Read the docs at http://readthedocs.org/docs/django-contactme/
