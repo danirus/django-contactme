@@ -1,0 +1,18 @@
+{% extends "django_contactme/base.html" %}
+
+{% block title %}{{ block.super }}&nbsp;&raquo;&nbsp;preview{% endblock %}
+
+{% block content %}
+  <H4>Get into contact</H4>
+
+  {% if not form.errors %}
+  <div>
+    <h4>Contact Message Preview</h4>
+    <div style="background:#eef">
+      {{ message|linebreaks }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% include "django_contactme/form.html" %}
+{% endblock %}

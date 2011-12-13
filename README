@@ -1,0 +1,5 @@
+django-contactme by Daniel Rus Morales <http://danir.us/>
+http://github.com/danirus/django-contactme/
+
+A reusable Django app to add a contact form that hits the database only after 
+users confirm their email addresses.

@@ -1,0 +1,7 @@
+*.pyc
+*~
+*.*~
+*.zip
+*.db
+docs/_build
+django_contactme.egg-info/
