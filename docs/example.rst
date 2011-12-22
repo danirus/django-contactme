@@ -1,10 +1,11 @@
 .. _ref-example:
 
-==============
-ContactMe Demo
-==============
+============
+Demo prpject
+============
 
-Django-ContactMe comes with a demo Django project to quickly see the app in action.
+Django-contactme comes with a demo project to see the app in action.
+
 
 Demo quick setup
 ================

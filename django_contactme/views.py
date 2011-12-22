@@ -15,10 +15,7 @@ from django_contactme.models import ContactMsg
 from django_contactme.forms import ContactMsgForm
 
 
-DEFAULT_FROM_EMAIL = getattr(settings, 'DEFAULT_FROM_EMAIL', 
-                             settings.DEFAULT_FROM_EMAIL)
-
-
+DEFAULT_FROM_EMAIL = getattr(settings, 'DEFAULT_FROM_EMAIL')
 CONTACTME_SALT = getattr(settings, 'CONTACTME_SALT', '')
 
 

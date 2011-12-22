@@ -1,10 +1,10 @@
 .. _ref-templatetags:
 
-======================
-ContactMe Templatetags
-======================
+============
+Templatetags
+============
 
-Django-ContactMe has a templatetag to render the contact form.
+Django-contactme has a templatetag to render the contact form.
 
 ``render_contact_form``
 =======================

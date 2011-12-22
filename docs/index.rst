@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Django-ContactMe documentation
-==============================
+Introduction
+============
 
-Django-ContactMe provides a simple contact form that only hits the database 
+**Django-contactme** provides a simple contact form that only hits the database 
 after the user confirm her email address.
 
 
@@ -25,10 +25,9 @@ Quick start
 ===========
 
 1. Add ``django_contactme`` to ``INSTALLED_APPS``.
-2. Add ``os.path.join(imp.find_module("django_contactme")[1], "templates")`` to ``TEMPLATE_DIRS``.
-3. Add ``url(r'^contact/', include('django_contactme.urls'))`` to your root URLconf.
-4. ``syncdb``, ``runserver``, and
-5. Hit http://localhost:8000/contact/ in your browser!
+2. Add ``url(r'^contact/', include('django_contactme.urls'))`` to your root URLconf.
+3. ``syncdb``, ``runserver``, and
+4. Hit http://localhost:8000/contact/ in your browser!
 
 
 Workflow in short

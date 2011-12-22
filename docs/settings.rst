@@ -1,10 +1,10 @@
 .. _ref-settings:
 
-==================
-ContactMe Settings
-==================
+========
+Settings
+========
 
-This is the comprehensive list of settings Django-ContactMe recognizes.
+This is the comprehensive list of settings Django-contactme recognizes.
 
 ``CONTACTME_MSG_MAX_LEN``
 =========================

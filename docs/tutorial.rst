@@ -1,18 +1,18 @@
 .. _ref-tutorial:
 
-==================
-ContactMe Tutorial
-==================
+========
+Tutorial
+========
 
-Django-ContactMe is a reusable app that relies on it's own code and doesn't require any other extra app.
+Django-contactme is a reusable app that relies on its own code and doesn't require any other extra app.
 
 
-Installation
+ Installation
 ============
 
-Installing Django-ContactMe is as simple as checking out the source and adding it to your project or ``PYTHONPATH``.
+Installing Django-contactme is as simple as checking out the source and adding it to your project or ``PYTHONPATH``.
 
-Use git, pip or easy_install to check out Django-ContactMe from Github_ or get a release from PyPI_:
+Use git, pip or easy_install to check out Django-contactme from Github_ or get a release from PyPI_:
 
   1. Use **git** to clone the repository, and then install the package (read more about git_):
 
@@ -43,17 +43,17 @@ Configuration
 
 1. Add ``'django_contactme'`` to your ``INSTALLED_APPS`` setting.
 
-2. Modify your ``urls.py``, add ``url(r'^contact/', include('django_contactme.urls'))``
+2. Add ``url(r'^contact/', include('django_contactme.urls'))`` to your ``urls.py``.
 
 3. Create a ``django_contactme`` directory in your templates directory and copy the default templates from Django-ContactMe into the new created directory.
 
-4. Run ``python manage.py syncdb`` to create the ``contactme_contact_msg`` table.
+4. Run ``python manage.py syncdb`` that creates the ``contactme_contact_msg`` table.
 
 
 Customization
 -------------
 
-1. Optionally set up the application's settings (see :doc:`settings`), but they all have sane defaults.
+1. Optionally you can add some settings to control Django-contactme behaviour (see :doc:`settings`), but they all have sane defaults.
 
 2. Customize the templates (see :doc:`templates`) in your ``django_contactme`` templates directory to make them fit in your design.
 
@@ -129,7 +129,7 @@ Calling signed.loads(s) checks the signature BEFORE unpickling the object -this 
 Signals and receivers
 =====================
 
-The workflow description mentions that Django-ContactMe sends 3 different signals:
+The workflow mentions that Django-contactme sends 3 signals:
 
 #. **confirmation_will_be_requested**: Sent just before a confirmation message is requested.
 
@@ -141,9 +141,9 @@ See :doc:`signals` to know more.
 
 You may want to extend Django-ContactMe by registering a receiver for any of this signals. 
 
-A example function receiver might check the datetime a user submitted a contact message and the datetime the confirmation URL is clicked. If the difference between them is over 7 days the message could be discarded with a graceful `"sorry, too old message"` template.
+An example function receiver might check the datetime a user submitted a contact message and the datetime the confirmation URL has been clicked. If the difference between them is over 7 days the message could be discarded with a graceful `"sorry, too old message"` template.
 
-Extend the demo site with the following code::
+Extending the demo site with the following code would do the job::
 
     #----------------------------------------
     # append the code below to demo/views.py:
@@ -159,8 +159,8 @@ Extend the demo site with the following code::
     
     
     #-----------------------------------------------------
-    # change get_instance_data in demo/forms.py to force a 
-    # submit_date older than 7 days:
+    # change get_instance_data in django_contactme/forms.py to cheat a bit and 
+    # make Django believe that the contact form was submitted 7 days ago:
 
     def get_instance_data(self):
         """

@@ -1,10 +1,10 @@
 .. _ref-signals:
 
-=================
-ContactMe Signals
-=================
+=======
+Signals
+=======
 
-List of signals sent by the Django-ContactMe app.
+List of signals sent by the Django-contactme app.
 
 Confirmation will be requested
 ==============================
