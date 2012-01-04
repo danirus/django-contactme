@@ -9,7 +9,7 @@ test.run_tests = run_tests
 
 setup(
     name = "django-contactme",
-    version = "1.0a",
+    version = "1.0a1",
     packages = find_packages(),
     license = "MIT",
     description = "Django contact form App with email verification",
