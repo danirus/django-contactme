@@ -3,7 +3,7 @@ Django-contactme
 
 |stillmaintained| by Daniel Rus Morales <http://danir.us/>
 
-* http://pypi.python.org/pypi/django-comments-xtd
+* http://pypi.python.org/pypi/django-contactme/
 * http://github.com/danirus/django-contactme/
 
 .. |stillmaintained| image:: http://stillmaintained.com/danirus/django-contactme.png 
@@ -19,5 +19,6 @@ Read the documentation at:
 .. _`Read The Docs`: http://readthedocs.org/docs/django-contactme/
 .. _`Python Packages Site`: http://packages.python.org/django-contactme/
 
-**Includes a limited test suite**. If you commit code, please consider adding proper coverage (especially if it has a chance for a regression) in the test suite.
+Includes a **demo site** limited **test suite**. If you commit code, please consider adding proper coverage (especially if it has a chance for a regression) in the test suite.
+
 Run the tests with: ``python setup.py test``
