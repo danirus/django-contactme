@@ -13,7 +13,7 @@ setup(
     packages = find_packages(),
     license = "MIT",
     description = "Django contact form App with email verification",
-    long_description = open("README").read(),
+    long_description = "A reusable Django app that adds a contact form with email protection to your site. Contact data will only hit the database when users confirm their email address after submitting the form.",
     author = "Daniel Rus Morales",
     author_email = "inbox@danir.us",
     maintainer = "Daniel Rus Morales",

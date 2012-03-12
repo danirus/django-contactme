@@ -1,15 +1,12 @@
 Django-contactme
 ================
 
-|stillmaintained| by Daniel Rus Morales <http://danir.us/>
+By Daniel Rus Morales <http://danir.us/>
 
 * http://pypi.python.org/pypi/django-contactme/
 * http://github.com/danirus/django-contactme/
 
-.. |stillmaintained| image:: http://stillmaintained.com/danirus/django-contactme.png 
-
-A reusable Django app to add a contact form that hits the database only after 
-users confirm their email addresses.
+A reusable Django app that adds a contact form with email protection to your site. Contact data will only hit the database when users confirm their email address after submitting the form.
 
 Read the documentation at:
 
