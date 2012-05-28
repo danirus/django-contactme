@@ -1,0 +1,20 @@
+{% load i18n %}
+{% autoescape off %}
+<p>{{ data.name }},</p>
+
+<p>{% blocktrans %}You, or someone in behalf of you, have sent a contact message to {{ site }}.{% endblocktrans %}</p>
+
+<p>The Message:<br/>
+<i>{{ data.message }}</i>
+<hr/>
+
+<p>{% blocktrans %}Please click on the link below to confirm the message. If you did not post this message, either ignore it or report an incident to {{ support_email }}.{% endblocktrans %}</p>
+
+<p><a href="http://{{ site.domain }}{{ confirmation_url }}">http://{{ site.domain }}{{ confirmation_url|slice:":40" }}...</a></p>
+
+<p>{% trans "If clicking does not work, you can also copy and paste the address into your browser's address window." %}</p>
+
+<p>--<br/>
+{% trans "Kind regards" %},<br/>
+{{ site }}</p>
+{% endautoescape %}

@@ -10,7 +10,7 @@
 
 {% blocktrans %}Please click on the link below to confirm the message. If you did not post this message, either ignore it or report an incident to {{ support_email }}.{% endblocktrans %}
 
-http://{{ site.domain }}{% url contactme-confirm-contact key %}
+http://{{ site.domain }}{{ confirmation_url }}
 
 {% trans "If clicking does not work, you can also copy and paste the address into your browser's address window." %}
 

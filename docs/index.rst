@@ -7,7 +7,7 @@ Introduction
 ============
 
 **Django-contactme** provides a simple contact form that only hits the database 
-after the user confirm her email address.
+after the user confirm her email address. Emails are threaded to avoid response blocking.
 
 
 .. toctree::

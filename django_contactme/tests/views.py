@@ -1,4 +1,5 @@
 import re
+import threading
 
 from django.core import mail
 from django.core.urlresolvers import reverse
@@ -7,6 +8,7 @@ from django.test import TestCase
 from django_contactme import signals, signed
 from django_contactme.models import ContactMsg
 from django_contactme.views import CONTACTME_SALT
+from django_contactme.utils import mail_sent_queue
 
 
 MESSAGE = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pulvinar, diam quis iaculis placerat, quam tellus ullamcorper risus, a accumsan lectus dui id nisi. Nulla nisi nulla, feugiat at malesuada ut, commodo sollicitudin urna. Sed adipiscing aliquam metus a scelerisque. Proin in erat ut lectus gravida rutrum. Sed vel eros id turpis convallis scelerisque ut nec nisl. Morbi et odio id ante ullamcorper ultrices. Nulla odio dui, ultricies a egestas nec, aliquet at ligula. Vestibulum scelerisque turpis mollis arcu suscipit laoreet. Suspendisse faucibus erat fermentum tortor facilisis aliquam. Donec vitae arcu elit. In hac habitasse platea dictumst. Morbi congue scelerisque lobortis."
@@ -35,14 +37,16 @@ class PostContactFormViewTestCase(TestCase):
                 self.timestamp = form.initial["timestamp"]
                 self.security_hash = form.initial["security_hash"]
 
-    def post_valid_data(self):
+    def post_valid_data(self,  wait_mail=True):
         data = {'timestamp':     self.timestamp,
                 'security_hash': self.security_hash,
                 'name':          'Alice Bloggs',
                 'email':         'alice.bloggs@example.com',
                 'message':       MESSAGE }
         self.response = self.client.post(
-            reverse("contactme-post-contact-form"), data=data)        
+            reverse("contactme-post-contact-form"), data=data)
+        if wait_mail and mail_sent_queue.get(block=True):
+            pass
   
     def test_post_without_security_data(self):
         data = {'name':    'Alice Bloggs',
@@ -71,7 +75,7 @@ class PostContactFormViewTestCase(TestCase):
             return False
 
         signals.confirmation_will_be_requested.connect(on_signal)
-        self.post_valid_data() # self.response gets updated
+        self.post_valid_data(wait_mail=False) # self.response gets updated
         self.assertTemplateUsed(self.response, 
                                 "django_contactme/discarded.html")
         
@@ -110,17 +114,21 @@ class ConfirmContactViewTestCase(TestCase):
                 'email':         'alice.bloggs@example.com',
                 'message':       MESSAGE }
         self.response = self.client.post(
-            reverse("contactme-post-contact-form"), data=data)        
+            reverse("contactme-post-contact-form"), data=data)
+        if mail_sent_queue.get(block=True):
+            pass
         self.url = re.search(r'http://[\S]+', mail.outbox[0].body).group()
 
-    def get_confirm_contact_url(self, key):
+    def get_confirm_contact_url(self, key, wait_mail=True):
         self.response = self.client.get(reverse("contactme-confirm-contact",
                                                 kwargs={'key': key}))
+        if wait_mail and mail_sent_queue.get(block=True):
+            pass
 
     def test_404_on_bad_signature(self):
         key = self.url.split("/")[-1]
         key = key[:-1]
-        self.get_confirm_contact_url(key)
+        self.get_confirm_contact_url(key, wait_mail=False)
         self.assertContains(self.response, "404", status_code=404)
 
     def test_consecutive_confirmation_url_visits_fail(self):
@@ -129,7 +137,7 @@ class ConfirmContactViewTestCase(TestCase):
         # first visit
         key = self.url.split("/")[-1]        
         self.get_confirm_contact_url(key)
-        self.get_confirm_contact_url(key)
+        self.get_confirm_contact_url(key, wait_mail=False)
         self.assertContains(self.response, "404", status_code=404)
 
     def test_signal_receiver_avoids_mailing_admins(self):
@@ -141,7 +149,7 @@ class ConfirmContactViewTestCase(TestCase):
         self.assertEqual(len(mail.outbox), 1) # sent during setUp
         signals.confirmation_received.connect(on_signal)
         key = self.url.split("/")[-1]
-        self.get_confirm_contact_url(key)
+        self.get_confirm_contact_url(key, wait_mail=False)
         self.assertEqual(len(mail.outbox), 1) # mailing avoided by on_signal
         self.assertTemplateUsed(self.response, 
                                 "django_contactme/discarded.html")

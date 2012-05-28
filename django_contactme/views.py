@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, Http404
 from django.shortcuts import render_to_response
 from django.template import loader, Context, RequestContext
@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_contactme import signals, signed
 from django_contactme.models import ContactMsg
 from django_contactme.forms import ContactMsgForm
+from django_contactme.utils import send_mail
 
 
 DEFAULT_FROM_EMAIL = getattr(settings, 'DEFAULT_FROM_EMAIL')
@@ -31,19 +32,22 @@ class ContactMsgPostBadRequest(HttpResponseBadRequest):
             self.content = render_to_string("django_contactme/400-debug.html", {"why": why})
 
 
-def send_confirmation_email(data, key, template="django_contactme/confirmation_email.txt"):
+def send_confirmation_email(data, key, text_template="django_contactme/confirmation_email.txt", html_template="django_contactme/confirmation_email.html"):
     """
     Render message and send contact_msg confirmation email
     """
     site = Site.objects.get_current()
     subject = "[%s] %s" % (site.name, _("contact message confirmation request"))
-    message_template = loader.get_template(template)
+    confirmation_url = reverse("contactme-confirm-contact", args=[key])
     message_context = Context({ 'data': data,
-                                 'key': key,
+                                'confirmation_url': confirmation_url,
                        'support_email': DEFAULT_FROM_EMAIL,
                                 'site': site })
-    message = message_template.render(message_context)
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [data['email']])
+    text_message_template = loader.get_template(text_template)
+    text_message = text_message_template.render(message_context)
+    html_message_template = loader.get_template(html_template)
+    html_message = html_message_template.render(message_context)
+    send_mail(subject, text_message, settings.DEFAULT_FROM_EMAIL, [data['email']], html=html_message)
 
 
 def send_contact_received_email(contact_msg, template="django_contactme/contact_received_email.txt"):
