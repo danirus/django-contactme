@@ -80,7 +80,8 @@ class ContactMsgForm(ContactMsgSecurityForm):
     email = forms.EmailField(label=_("Email address"), max_length=200, 
                              widget=forms.TextInput(attrs={"maxlength":200}),
                              help_text=_("Required for verification"))
-    message = forms.CharField(label=_('Message'), widget=forms.Textarea,
+    message = forms.CharField(label=_('Message'), 
+                              widget=forms.Textarea(attrs={'placeholder':_('your message')}),
                               max_length=CONTACTME_MSG_MAX_LEN)
 
     def get_instance_data(self):
