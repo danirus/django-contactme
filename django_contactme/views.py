@@ -1,3 +1,6 @@
+#-*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
@@ -16,10 +19,6 @@ from django_contactme.forms import ContactMsgForm
 from django_contactme.utils import send_mail
 
 
-DEFAULT_FROM_EMAIL = getattr(settings, 'DEFAULT_FROM_EMAIL')
-CONTACTME_SALT = getattr(settings, 'CONTACTME_SALT', '')
-
-
 class ContactMsgPostBadRequest(HttpResponseBadRequest):
     """
     Response returned when a comment post is invalid. If ``DEBUG`` is on a
@@ -29,10 +28,15 @@ class ContactMsgPostBadRequest(HttpResponseBadRequest):
     def __init__(self, why):
         super(ContactMsgPostBadRequest, self).__init__()
         if settings.DEBUG:
-            self.content = render_to_string("django_contactme/400-debug.html", {"why": why})
+            self.content = render_to_string("django_contactme/400-debug.html", 
+                                            {"why": why})
 
 
-def send_confirmation_email(data, key, text_template="django_contactme/confirmation_email.txt", html_template="django_contactme/confirmation_email.html"):
+def send_confirmation_email(data, key, 
+                            text_template=("django_contactme/"
+                                           "confirmation_email.txt"), 
+                            html_template=("django_contactme/"
+                                           "confirmation_email.html")):
     """
     Render message and send contact_msg confirmation email
     """
@@ -41,16 +45,19 @@ def send_confirmation_email(data, key, text_template="django_contactme/confirmat
     confirmation_url = reverse("contactme-confirm-contact", args=[key])
     message_context = Context({ 'data': data,
                                 'confirmation_url': confirmation_url,
-                       'support_email': DEFAULT_FROM_EMAIL,
+                       'support_email': settings.DEFAULT_FROM_EMAIL,
                                 'site': site })
     text_message_template = loader.get_template(text_template)
     text_message = text_message_template.render(message_context)
     html_message_template = loader.get_template(html_template)
     html_message = html_message_template.render(message_context)
-    send_mail(subject, text_message, settings.DEFAULT_FROM_EMAIL, [data['email']], html=html_message)
+    send_mail(subject, text_message, settings.DEFAULT_FROM_EMAIL, 
+              [data['email']], html=html_message)
 
 
-def send_contact_received_email(contact_msg, template="django_contactme/contact_received_email.txt"):
+def send_contact_received_email(contact_msg, 
+                                template=("django_contactme/"
+                                          "contact_received_email.txt")):
     site = Site.objects.get_current()
     subject = "[%s] %s" % (site.name, _("new contact request"))
     message_template = loader.get_template(template)
@@ -68,13 +75,17 @@ def send_contact_received_email(contact_msg, template="django_contactme/contact_
 
 
 @require_GET
-def get_contact_form(request, next=None, template="django_contactme/contactme.html"):
+def get_contact_form(request, next=None, 
+                     template="django_contactme/contactme.html"):
     return render_to_response(template, {"next": next}, RequestContext(request))
 
 
 @csrf_protect
 @require_POST
-def post_contact_form(request, next=None, template_preview="django_contactme/preview.html", template_discarded="django_contactme/discarded.html", template_post="django_contactme/confirmation_sent.html"):
+def post_contact_form(request, next=None, 
+                      template_preview="django_contactme/preview.html", 
+                      template_discarded="django_contactme/discarded.html", 
+                      template_post="django_contactme/confirmation_sent.html"):
     """
     Post a contact message.
 
@@ -121,7 +132,7 @@ def post_contact_form(request, next=None, template_preview="django_contactme/pre
 
     # Create key and send confirmation URL by email
     key = signed.dumps(contact_msg_data, compress=True, 
-                       extra_key=CONTACTME_SALT)
+                       extra_key=settings.CONTACTME_SALT)
     send_confirmation_email(contact_msg_data, key)
     
     # Signal that a confirmation has been requested
@@ -136,9 +147,11 @@ def post_contact_form(request, next=None, template_preview="django_contactme/pre
                               context_instance=RequestContext(request))
 
 
-def confirm_contact(request, key, template_accepted="django_contactme/accepted.html", template_discarded="django_contactme/discarded.html"):
+def confirm_contact(request, key, 
+                    template_accepted="django_contactme/accepted.html", 
+                    template_discarded="django_contactme/discarded.html"):
     try:
-        data = signed.loads(key, extra_key=CONTACTME_SALT)
+        data = signed.loads(key, extra_key=settings.CONTACTME_SALT)
     except (ValueError, signed.BadSignature):
         raise Http404
     

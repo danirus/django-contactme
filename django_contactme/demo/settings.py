@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import imp
 import os
@@ -98,5 +99,5 @@ SERVER_EMAIL        = DEFAULT_FROM_EMAIL
 # following line to let this django demo sending emails
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-CONTACTME_SALT = "es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
+CONTACTME_SALT = b"es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
 CONTACTME_NOTIFY_TO = "Your Name <youruser@yourdomain>"

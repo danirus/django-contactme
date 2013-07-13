@@ -1,5 +1,19 @@
-Django-contactme
+django-contactme
 ================
+
+|downloads|_ |TravisCI|_
+
+.. |TravisCI| image:: https://secure.travis-ci.org/danirus/django-contactme.png?branch=master
+.. _TravisCI: https://travis-ci.org/danirus/django-contactme
+.. |downloads| image:: https://pypip.in/d/django-contactme/badge.png
+        :target: https://pypi.python.org/pypi/django-contactme
+.. _downloads: https://pypi.python.org/pypi/django-contactme
+
+Tested under:
+
+* Python 3.2 and django 1.5.1: `builds <http://buildbot.danir.us/builders/django-contactme-py32dj15>`_
+* Python 2.7 and django 1.5.1: `builds <http://buildbot.danir.us/builders/django-contactme-py27dj15>`_
+* Python 2.7 and django 1.4.5: `builds <http://buildbot.danir.us/builders/django-contactme-py27dj14>`_
 
 By Daniel Rus Morales <http://danir.us/>
 

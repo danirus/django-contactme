@@ -36,13 +36,18 @@ start of the base64 pickle.
 There are 65 url-safe characters: the 64 used by url-safe base64 and the '.'. 
 These functions make use of all of them.
 """
+from __future__ import unicode_literals
 
-import pickle, base64
-from django.conf import settings
-from django.utils.hashcompat import sha_constructor
+import base64
 import hmac
+import pickle
 
-def dumps(obj, key = None, compress = False, extra_key = ''):
+from django.conf import settings
+from django.utils import six
+from django.utils.hashcompat import sha_constructor
+
+
+def dumps(obj, key = None, compress = False, extra_key = b''):
     """
     Returns URL-safe, sha1 signed base64 compressed pickle. If key is 
     None, settings.SECRET_KEY is used instead.
@@ -62,21 +67,24 @@ def dumps(obj, key = None, compress = False, extra_key = ''):
         if len(compressed) < (len(pickled) - 1):
             pickled = compressed
             is_compressed = True
-    base64d = encode(pickled).strip('=')
+    base64d = encode(pickled).strip(b'=')
     if is_compressed:
-        base64d = '.' + base64d
-    return sign(base64d, (key or settings.SECRET_KEY) + extra_key)
+        base64d = b'.' + base64d
+    return sign(base64d, 
+                (key or settings.SECRET_KEY.encode('ascii')) + extra_key)
 
-def loads(s, key = None, extra_key = ''):
+def loads(s, key = None, extra_key = b''):
     "Reverse of dumps(), raises ValueError if signature fails"
-    if isinstance(s, unicode):
-        s = s.encode('utf8') # base64 works on bytestrings, not on unicodes
+    if isinstance(s, six.text_type):
+        s = s.encode('utf8') # base64 works on bytestrings
     try:
-        base64d = unsign(s, (key or settings.SECRET_KEY) + extra_key)
+        base64d = unsign(s, 
+                         (key or settings.SECRET_KEY.encode('ascii')) + 
+                         extra_key)
     except ValueError:
         raise
     decompress = False
-    if base64d[0] == '.':
+    if base64d.startswith(b'.'):
         # It's compressed; uncompress it first
         base64d = base64d[1:]
         decompress = True
@@ -87,10 +95,10 @@ def loads(s, key = None, extra_key = ''):
     return pickle.loads(pickled)
 
 def encode(s):
-    return base64.urlsafe_b64encode(s).strip('=')
+    return base64.urlsafe_b64encode(s).strip(b'=')
 
 def decode(s):
-    return base64.urlsafe_b64decode(s + '=' * (len(s) % 4))
+    return base64.urlsafe_b64decode(s + b'=' * (len(s) % 4))
 
 class BadSignature(ValueError):
     # Extends ValueError, which makes it more convenient to catch and has 
@@ -98,25 +106,24 @@ class BadSignature(ValueError):
     pass
 
 def sign(value, key = None):
-    if isinstance(value, unicode):
-        raise TypeError, \
-            'sign() needs bytestring, not unicode: %s' % repr(value)
+    if isinstance(value, six.text_type):
+        raise TypeError('sign() needs bytestring: %s' % repr(value))
     if key is None:
-        key = settings.SECRET_KEY
-    return value + '.' + base64_hmac(value, key)
+        key = settings.SECRET_KEY.encode('ascii')
+    return value + b'.' + base64_hmac(value, key)
 
 def unsign(signed_value, key = None):
-    if isinstance(signed_value, unicode):
-        raise TypeError, 'unsign() needs bytestring, not unicode'
+    if isinstance(signed_value, six.text_type):
+        raise TypeError('unsign() needs bytestring')
     if key is None:
-        key = settings.SECRET_KEY
-    if not '.' in signed_value:
-        raise BadSignature, 'Missing sig (no . found in value)'
-    value, sig = signed_value.rsplit('.', 1)
+        key = settings.SECRET_KEY.encode('ascii')
+    if signed_value.find(b'.') == -1:
+        raise BadSignature('Missing sig (no . found in value)')
+    value, sig = signed_value.rsplit(b'.', 1)
     if base64_hmac(value, key) == sig:
         return value
     else:
-        raise BadSignature, 'Signature failed: %s' % sig
+        raise BadSignature('Signature failed: %s' % sig)
 
 def base64_hmac(value, key):
     return encode(hmac.new(key, value, sha_constructor).digest())

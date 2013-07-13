@@ -1,13 +1,15 @@
+from __future__ import unicode_literals
+
 import re
 import threading
 
+from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from django_contactme import signals, signed
 from django_contactme.models import ContactMsg
-from django_contactme.views import CONTACTME_SALT
 from django_contactme.utils import mail_sent_queue
 
 
@@ -157,7 +159,7 @@ class ConfirmContactViewTestCase(TestCase):
     def test_contact_msg_is_created_and_email_sent(self):
         key = self.url.split("/")[-1]
         self.get_confirm_contact_url(key)
-        data = signed.loads(key, extra_key=CONTACTME_SALT)
+        data = signed.loads(key, extra_key=settings.CONTACTME_SALT)
         try:
             cmsg = ContactMsg.objects.get(email=data["email"], 
                                           name=data["name"],

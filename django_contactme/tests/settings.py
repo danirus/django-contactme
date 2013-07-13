@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import os
 
@@ -82,5 +83,5 @@ INSTALLED_APPS = [
     'django_contactme',
 ]
 
-CONTACTME_SALT = "es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
+CONTACTME_SALT = b"es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
 CONTACTME_NOTIFY_TO = "Joe Bloggs <joe.bloggs@example.com>"

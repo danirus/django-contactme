@@ -1,6 +1,10 @@
+#-*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('django_contactme.views',
+urlpatterns = patterns(
+    'django_contactme.views',
+
     url(r'^$',
         'get_contact_form',
         name='contactme-get-contact-form'),

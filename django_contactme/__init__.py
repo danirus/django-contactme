@@ -1,7 +1,7 @@
 """
-django_contactme - Contact form extension for Django, with email verification
+django_contactme - Contact form pluggable django app with email verification
 """
-VERSION = (1, 0, 0, 'a', 2) # following PEP 386
+VERSION = (1, 1, 0, 'b', 1) # following PEP 386
 
 def get_version():
     version = '%s.%s' % (VERSION[0], VERSION[1])
