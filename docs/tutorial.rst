@@ -4,15 +4,15 @@
 Tutorial
 ========
 
-Django-contactme is a reusable app that relies on its own code and doesn't require any other extra app.
+django-contactme is a reusable app that relies on its own code and doesn't require any other extra app.
 
 
- Installation
+Installation
 ============
 
-Installing Django-contactme is as simple as checking out the source and adding it to your project or ``PYTHONPATH``.
+Installing django-contactme is as simple as checking out the source and adding it to your project or ``PYTHONPATH``.
 
-Use git, pip or easy_install to check out Django-contactme from Github_ or get a release from PyPI_:
+Use git, pip or easy_install to check out django-contactme from Github_ or get a release from PyPI_:
 
   1. Use **git** to clone the repository, and then install the package (read more about git_):
 
@@ -45,7 +45,7 @@ Configuration
 
 2. Add ``url(r'^contact/', include('django_contactme.urls'))`` to your ``urls.py``.
 
-3. Create a ``django_contactme`` directory in your templates directory and copy the default templates from Django-ContactMe into the new created directory.
+3. Create a ``django_contactme`` directory in your templates directory and copy the default templates from django-contactme into the new created directory.
 
 4. Run ``python manage.py syncdb`` that creates the ``contactme_contact_msg`` table.
 
@@ -53,7 +53,7 @@ Configuration
 Customization
 -------------
 
-1. Optionally you can add some settings to control Django-contactme behaviour (see :doc:`settings`), but they all have sane defaults.
+1. Optionally you can add some settings to control django-contactme behaviour (see :doc:`settings`), but they all have sane defaults.
 
 2. Customize the templates (see :doc:`templates`) in your ``django_contactme`` templates directory to make them fit in your design.
 
@@ -71,7 +71,7 @@ Workflow described in 3 actions:
 
 2. Post the Contact Form.
 
- #. Check if there are *form security errors*. Django_ContactMe forms are protected with ``timestamp``, ``security_hash`` and ``honeypot`` field, following the same approach as the built-in `Django Comments Framework <https://docs.djangoproject.com/en/1.3/ref/contrib/comments/>`_. In case of *form security errors* send a 400 code response and stop.
+ #. Check if there are *form security errors*. django_contactme forms are protected with ``timestamp``, ``security_hash`` and ``honeypot`` field, following the same approach as the built-in `Django Comments Framework <https://docs.djangoproject.com/en/1.3/ref/contrib/comments/>`_. In case of *form security errors* send a 400 code response and stop.
 
  #. Check whether there are other *form errors* (fields ``name``, ``email`` and ``message``) or whether the user clicked on the *preview* button. In such a case render the *Contact Form* again, with the *form errors* if any, and stop.
 
@@ -99,7 +99,7 @@ Workflow described in 3 actions:
 Creating the secure token for the confirmation URL
 --------------------------------------------------
 
-The Confirmation URL sent by email to the user has a secured token with the contact form data. To create the token Django-ContactMe uses the module ``signed.py`` authored by Simon Willison and provided in `Django-OpenID <http://github.com/simonw/django-openid>`_. 
+The Confirmation URL sent by email to the user has a secured token with the contact form data. To create the token django-contactme uses the module ``signed.py`` authored by Simon Willison and provided in `Django-OpenID <http://github.com/simonw/django-openid>`_. 
 
 ``django_openid.signed`` offers two high level functions:
 
@@ -129,7 +129,7 @@ Calling signed.loads(s) checks the signature BEFORE unpickling the object -this 
 Signals and receivers
 =====================
 
-The workflow mentions that Django-contactme sends 3 signals:
+The workflow mentions that django-contactme sends 3 signals:
 
 #. **confirmation_will_be_requested**: Sent just before a confirmation message is requested.
 
@@ -139,7 +139,7 @@ The workflow mentions that Django-contactme sends 3 signals:
 
 See :doc:`signals` to know more.
 
-You may want to extend Django-ContactMe by registering a receiver for any of this signals. 
+You may want to extend django-contactme by registering a receiver for any of this signals. 
 
 An example function receiver might check the datetime a user submitted a contact message and the datetime the confirmation URL has been clicked. If the difference between them is over 7 days the message could be discarded with a graceful `"sorry, too old message"` template.
 
@@ -160,7 +160,7 @@ Extending the demo site with the following code would do the job::
     
     #-----------------------------------------------------
     # change get_instance_data in django_contactme/forms.py to cheat a bit and 
-    # make Django believe that the contact form was submitted 7 days ago:
+    # make django believe that the contact form was submitted 7 days ago:
 
     def get_instance_data(self):
         """

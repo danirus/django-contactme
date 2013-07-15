@@ -6,9 +6,16 @@
 Introduction
 ============
 
-**Django-contactme** provides a simple contact form that only hits the database 
+**django-contactme** provides a simple contact form that only hits the database 
 after the user confirm her email address. Emails are threaded to avoid response blocking.
 
+Tested under:
+
+* Python 3.2 and Django 1.5.1
+* Python 2.7 and Django 1.5.1
+* Python 2.7 and Django 1.4.5
+
+Table of contents:
 
 .. toctree::
    :maxdepth: 2
@@ -41,7 +48,7 @@ The user...
 
 #. She finally clicks on `post` and submit the form.
 
-#. Then Django-ContactMe:
+#. Then django-contactme:
 
  #. Creates a token with the contact form data.
 
@@ -51,7 +58,7 @@ The user...
 
 #. She receives the email, she opens it, and she clicks on the confirmation link.
 
-#. Then Django-ContactMe:
+#. Then django-contactme:
 
  #. Check that the token is correct and creates a ``ContactMsg`` model instance.
 

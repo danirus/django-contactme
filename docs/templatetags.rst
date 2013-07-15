@@ -4,7 +4,7 @@
 Templatetags
 ============
 
-Django-contactme has a templatetag to render the contact form.
+django-contactme has a templatetag to render the contact form.
 
 ``render_contact_form``
 =======================

@@ -4,7 +4,7 @@
 Signals
 =======
 
-List of signals sent by the Django-contactme app.
+List of signals sent by the django-contactme app.
 
 Confirmation will be requested
 ==============================

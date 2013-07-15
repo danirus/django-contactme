@@ -4,10 +4,10 @@
 Templates
 =========
 
-List of template files coming with Django-ContactMe.
+List of template files coming with django-contactme.
 
 **django_contactme/contactme.html**
-    Entry point for the Django-ContactMe form. Template rendereded when visiting the ``/contact/`` URL. It makes use of the ``render_contact_form`` templatetag (see :doc:`templatetags`).
+    Entry point for the django-contactme form. Template rendereded when visiting the ``/contact/`` URL. It makes use of the ``render_contact_form`` templatetag (see :doc:`templatetags`).
 
 **django_contactme/form.html**
     Used by the templatetag ``render_contact_form`` (see :doc:`templatetags`).

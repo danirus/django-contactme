@@ -7,3 +7,4 @@ docs/_build
 django_contactme.egg-info/
 build/
 dist/
+.emacs.desktop*

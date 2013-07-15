@@ -4,7 +4,7 @@
 Settings
 ========
 
-This is the comprehensive list of settings Django-contactme recognizes.
+This is the comprehensive list of settings django-contactme recognizes.
 
 ``CONTACTME_MSG_MAX_LEN``
 =========================

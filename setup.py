@@ -14,7 +14,7 @@ test.run_tests = run_tests
 
 setup(
     name = "django-contactme",
-    version = "1.1a1",
+    version = "1.1",
     packages = find_packages(),
     license = "MIT",
     description = "Django pluggable contact form app with email verification.",
@@ -25,7 +25,7 @@ setup(
     maintainer_email = "inbox@danir.us",
     url = "http://github.com/danirus/django-contactme/",
     classifiers = [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
