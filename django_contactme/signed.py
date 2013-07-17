@@ -41,10 +41,10 @@ from __future__ import unicode_literals
 import base64
 import hmac
 import pickle
+import hashlib
 
 from django.conf import settings
 from django.utils import six
-from django.utils.hashcompat import sha_constructor
 
 
 def dumps(obj, key = None, compress = False, extra_key = b''):
@@ -126,4 +126,4 @@ def unsign(signed_value, key = None):
         raise BadSignature('Signature failed: %s' % sig)
 
 def base64_hmac(value, key):
-    return encode(hmac.new(key, value, sha_constructor).digest())
+    return encode(hmac.new(key, value, hashlib.sha1).digest())
