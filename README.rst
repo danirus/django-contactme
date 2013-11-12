@@ -11,10 +11,10 @@ django-contactme
 
 Tested under:
 
-* Python 3.2 and django 1.6:
-* Python 3.2 and django 1.5.5: `builds <http://buildbot.danir.us/builders/django-contactme-py32dj15>`_
-* Python 2.7 and django 1.5.5: `builds <http://buildbot.danir.us/builders/django-contactme-py27dj15>`_
-* Python 2.7 and django 1.4.10: `builds <http://buildbot.danir.us/builders/django-contactme-py27dj14>`_
+* Python 3.2 and django 1.6 `builds <http://buildbot.danir.us/builders/django-contactme-py32dj16>`_
+* Python 3.2 and django 1.5.5 `builds <http://buildbot.danir.us/builders/django-contactme-py32dj15>`_
+* Python 2.7 and django 1.5.5 `builds <http://buildbot.danir.us/builders/django-contactme-py27dj15>`_
+* Python 2.7 and django 1.4.10 `builds <http://buildbot.danir.us/builders/django-contactme-py27dj14>`_
 
 By Daniel Rus Morales <http://danir.us/>
 
