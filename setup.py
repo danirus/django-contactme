@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test
 
 def run_tests(*args):
-    from django_contactme.tests import run_tests
-    errors = run_tests()
+    import subprocess
+    errors = subprocess.Popen(["coverage", "run", "tests/runtests.py"]).wait()
     if errors:
         sys.exit(1)
     else:
@@ -14,7 +14,7 @@ test.run_tests = run_tests
 
 setup(
     name = "django-contactme",
-    version = "1.1",
+    version = "1.2",
     packages = find_packages(),
     license = "MIT",
     description = "Django pluggable contact form app with email verification.",

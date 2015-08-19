@@ -11,8 +11,8 @@ after the user confirm her email address. Emails are threaded to avoid response 
 
 Tested under:
 
-* Python 3.2 and Django 1.5.1
-* Python 2.7 and Django 1.5.1
+* Python 3.4 and Django 1.8.3
+* Python 2.7 and Django 1.7.7
 * Python 2.7 and Django 1.4.5
 
 Table of contents:
