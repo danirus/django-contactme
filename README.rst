@@ -27,6 +27,4 @@ Read the documentation at:
 
 Includes a **demo site** limited **test suite**. If you commit code, please consider adding proper coverage (especially if it has a chance for a regression) in the test suite.
 
-Run the tests with: ``tox``
-
-By Daniel Rus Morales <http://danir.us/>
+Run the tests with: ``tox``.
