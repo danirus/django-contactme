@@ -9,8 +9,8 @@ register = template.Library()
 class ContactFormNode(template.Node):
     def render(self, context):
         context.push()
-        form_str = render_to_string("django_contactme/form.html", 
-                                    {"form": ContactMsgForm() }, 
+        form_str = render_to_string("django_contactme/form.html",
+                                    {"form": ContactMsgForm()},
                                     context)
         context.pop()
         return form_str
@@ -18,7 +18,7 @@ class ContactFormNode(template.Node):
 
 def render_contact_form(parser, token):
     """
-    Render the contact form (as returned by ``{% render_contact_form %}``) 
+    Render the contact form (as returned by ``{% render_contact_form %}``)
     through the ``django_contactme/form.html`` template.
 
     Syntax::

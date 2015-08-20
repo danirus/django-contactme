@@ -8,7 +8,7 @@ from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
 
-CONTACTME_MSG_MAX_LEN = getattr(settings,'CONTACTME_MSG_MAX_LEN',3000)
+CONTACTME_MSG_MAX_LEN = getattr(settings, 'CONTACTME_MSG_MAX_LEN', 3000)
 
 
 # field type IPAddressField deprecated as of django version 1.7
@@ -17,7 +17,7 @@ if DJANGO_VERSION[:2] > (1, 6):
 else:
     ip_address_field_type = models.IPAddressField
 
-    
+
 class ContactMsg(models.Model):
     """
     An incoming message from a site visitor.
@@ -27,8 +27,8 @@ class ContactMsg(models.Model):
     email = models.EmailField(_("Contact's email address"))
     message = models.TextField(_("Message"), max_length=CONTACTME_MSG_MAX_LEN)
     submit_date = models.DateTimeField(_("Date/Time submitted"), default=None)
-    ip_address  = ip_address_field_type(_('IP address'), blank=True, null=True)
-    
+    ip_address = ip_address_field_type(_('IP address'), blank=True, null=True)
+
     class Meta:
         db_table = "contactme_contact_msg"
         ordering = ('submit_date',)
@@ -53,4 +53,5 @@ class ContactMsg(models.Model):
             'message': self.message,
             'domain': self.site.domain,
         }
-        return _('Sent by %(user)s at %(date)s\n\n%(message)s\n\nhttp://%(domain)s') % d
+        return _('Sent by %(user)s at %(date)s\n\n%(message)s\n\n'
+                 'http://%(domain)s') % d

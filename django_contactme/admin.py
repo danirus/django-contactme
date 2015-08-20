@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_contactme.models import ContactMsg
 
+
 class ContactMsgAdmin(admin.ModelAdmin):
     list_display = ('name', 'ip_address', 'submit_date')
     fieldsets = (

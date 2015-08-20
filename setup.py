@@ -2,19 +2,14 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test
 
-def run_tests(*args):
-    import subprocess
-    errors = subprocess.Popen(["coverage", "run", "tests/runtests.py"]).wait()
-    if errors:
-        sys.exit(1)
-    else:
-        sys.exit(0)
-
-test.run_tests = run_tests
+class TestCommand(test):
+    def run(self):
+        import pytest
+        pytest.main(['-v',])
 
 setup(
     name = "django-contactme",
-    version = "1.2",
+    version = "1.2.1",
     packages = find_packages(),
     license = "MIT",
     description = "Django pluggable contact form app with email verification.",
@@ -31,9 +26,20 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Framework :: Django',
+        'Framework :: Django :: 1.4',
+        'Framework :: Django :: 1.5',
+        'Framework :: Django :: 1.6',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
     ],
-    test_suite = "dummy",
+    # test_suite = "dummy",
     include_package_data=True,
+    cmdclass={'test': TestCommand},
 )

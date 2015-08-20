@@ -1,4 +1,3 @@
-#-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import imp
@@ -15,11 +14,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.sqlite3', 
+        'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     'django_contactme_demo.db',
-        'USER':     '', 
-        'PASSWORD': '', 
-        'HOST':     '', 
+        'USER':     '',
+        'PASSWORD': '',
+        'HOST':     '',
         'PORT':     '',
     }
 }
@@ -87,15 +86,15 @@ INSTALLED_APPS = (
     'django_contactme',
 )
 
-# EMAIL_HOST          = "smtp.gmail.com" 
+# EMAIL_HOST          = "smtp.gmail.com"
 # EMAIL_PORT          = "587"
 # EMAIL_HOST_USER     = ""
 # EMAIL_HOST_PASSWORD = ""
 # EMAIL_USE_TLS       = True # Yes for Gmail
-DEFAULT_FROM_EMAIL  = "Alice Bloggs <alice@example.com>"
-SERVER_EMAIL        = DEFAULT_FROM_EMAIL
+DEFAULT_FROM_EMAIL = "Alice Bloggs <alice@example.com>"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-# Fill in actual EMAIL settings above, and comment out the 
+# Fill in actual EMAIL settings above, and comment out the
 # following line to let this django demo sending emails
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

@@ -69,7 +69,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'django_contactme.tests.urls'
+ROOT_URLCONF = 'tests.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -86,8 +86,8 @@ INSTALLED_APPS = [
 CONTACTME_SALT = b"es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
 CONTACTME_NOTIFY_TO = "Joe Bloggs <joe.bloggs@example.com>"
 
-import django
-if django.VERSION[:2] > (1, 6):
-    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-else:
-    TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+# import django
+# if django.VERSION[:2] > (1, 6):
+#     TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+# else:
+#     TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'

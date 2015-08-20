@@ -17,9 +17,10 @@ class ContactMsgSecurityForm(forms.Form):
     """
     Handles the security aspects (anti-spoofing) for contact forms.
     """
-    timestamp     = forms.IntegerField(widget=forms.HiddenInput)
-    security_hash = forms.CharField(min_length=40, max_length=40, widget=forms.HiddenInput)
-    honeypot      = forms.CharField(required=False, help_text=_("keep it empty"))
+    timestamp = forms.IntegerField(widget=forms.HiddenInput)
+    security_hash = forms.CharField(min_length=40, max_length=40,
+                                    widget=forms.HiddenInput)
+    honeypot = forms.CharField(required=False, help_text=_("keep it empty"))
 
     def __init__(self, data=None, initial=None):
         if initial is None:
@@ -61,9 +62,9 @@ class ContactMsgSecurityForm(forms.Form):
     def generate_security_data(self):
         """Generate a dict of security data for "initial" data."""
         timestamp = int(time.time())
-        security_dict =   {
-            'timestamp'     : str(timestamp),
-            'security_hash' : self.generate_security_hash(timestamp),
+        security_dict = {
+            'timestamp': str(timestamp),
+            'security_hash': self.generate_security_hash(timestamp),
         }
         return security_dict
 
@@ -75,23 +76,21 @@ class ContactMsgSecurityForm(forms.Form):
 
 class ContactMsgForm(ContactMsgSecurityForm):
 
-    name = forms.CharField(label=_("Name"), max_length=100, 
-                           widget=forms.TextInput(attrs={"maxlength":100}))
-    email = forms.EmailField(label=_("Email address"), max_length=200, 
-                             widget=forms.TextInput(attrs={"maxlength":200}),
+    name = forms.CharField(label=_("Name"), max_length=100,
+                           widget=forms.TextInput(attrs={"maxlength": 100}))
+    email = forms.EmailField(label=_("Email address"), max_length=200,
+                             widget=forms.TextInput(attrs={"maxlength": 200}),
                              help_text=_("Required for verification"))
-    message = forms.CharField(label=_('Message'), 
-                              widget=forms.Textarea(attrs={'placeholder':_('your message')}),
+    message = forms.CharField(label=_('Message'),
+                              widget=forms.Textarea(
+                                  attrs={'placeholder': _('your message')}),
                               max_length=CONTACTME_MSG_MAX_LEN)
 
     def get_instance_data(self):
         """
-        Returns the dict of data to be used to create a contact message. 
+        Returns the dict of data to be used to create a contact message.
         """
-        return dict(
-            name        = self.cleaned_data["name"],
-            email       = self.cleaned_data["email"],
-            message     = self.cleaned_data["message"],
-            submit_date = datetime.datetime.now(),
-        )
-
+        return dict(name=self.cleaned_data["name"],
+                    email=self.cleaned_data["email"],
+                    message=self.cleaned_data["message"],
+                    submit_date=datetime.datetime.now())
