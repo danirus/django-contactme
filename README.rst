@@ -1,29 +1,21 @@
 django-contactme
 ================
 
-|downloads|_ |TravisCI|_
+|pypi| |travis| |coveralls|
 
-.. |TravisCI| image:: https://secure.travis-ci.org/danirus/django-contactme.png?branch=master
-.. _TravisCI: https://travis-ci.org/danirus/django-contactme
-.. |downloads| image:: https://pypip.in/d/django-contactme/badge.png
-        :target: https://pypi.python.org/pypi/django-contactme
-.. _downloads: https://pypi.python.org/pypi/django-contactme
+.. |travis| image:: https://secure.travis-ci.org/danirus/django-contactme.png?branch=master
+    :target: https://travis-ci.org/danirus/django-contactme
+.. |pypi| image:: https://badge.fury.io/py/django-contactme.png
+    :target: http://badge.fury.io/py/django-contactme
+.. |coveralls| image:: https://coveralls.io/repos/danirus/django-contactme/badge.png?branch=master
+    :target: https://coveralls.io/r/danirus/django-contactme?branch=master
 
-Tested under:
-
-* Python 3.2 and django 1.6 `builds <http://buildbot.danir.us/builders/django-contactme-py32dj16>`_
-* Python 3.2 and django 1.5.5 `builds <http://buildbot.danir.us/builders/django-contactme-py32dj15>`_
-* Python 2.7 and django 1.5.5 `builds <http://buildbot.danir.us/builders/django-contactme-py27dj15>`_
-* Python 2.7 and django 1.4.10 `builds <http://buildbot.danir.us/builders/django-contactme-py27dj14>`_
-
-By Daniel Rus Morales <http://danir.us/>
-
-* http://pypi.python.org/pypi/django-contactme/
-* http://github.com/danirus/django-contactme/
 
 A reusable Django app that adds a contact form with email protection to your site:
 1. Contact data only hit the database when the user confirms her email address
 2. Emails are threaded to avoid response blocking
+3. Support Django 1.4, 1.5, 1.6, 1.7 and 1.8
+4. Python 3 for Django 1.5, 1.6, 1.7, 1.8
 
 Read the documentation at:
 
@@ -35,4 +27,6 @@ Read the documentation at:
 
 Includes a **demo site** limited **test suite**. If you commit code, please consider adding proper coverage (especially if it has a chance for a regression) in the test suite.
 
-Run the tests with: ``python setup.py test``
+Run the tests with: ``tox``
+
+By Daniel Rus Morales <http://danir.us/>

@@ -34,4 +34,4 @@ install:
 script:
   - env | sort
   - tox -e $TOX_ENV
-  - flake8 --show-source django_contactme/
+  - flake8 --show-source --max-line-length=80 --exclude=.tox,docs,tests/settings,django_contactme/__init__.py,django_contactme/migrations django_contactme/
