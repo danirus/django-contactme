@@ -5,6 +5,8 @@ from setuptools.command.test import test
 class TestCommand(test):
     def run(self):
         import pytest
+        from django_contactme.tests import setup_django_settings
+        setup_django_settings()
         pytest.main(['-v',])
 
 setup(

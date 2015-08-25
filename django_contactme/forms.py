@@ -5,8 +5,11 @@
 import time
 import datetime
 
-from django import forms
-from django.forms.util import ErrorDict
+from django import forms, VERSION as DJANGO_VERSION
+if DJANGO_VERSION[:2] < (1, 7):
+    from django.forms.util import ErrorDict
+else:
+    from django.forms.utils import ErrorDict
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.translation import ugettext_lazy as _
 
