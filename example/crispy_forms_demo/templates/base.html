@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="Stylesheet">    
+    <title>{% block title %}django-contactme with crispy-forms{% endblock %}</title>
+    <style>
+      .container {
+        width: auto;
+        max-width: 680px;
+        padding: 0 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+	<h3>django-contactme with crispy-forms</h3>
+      </div>
+      <p class="lead">
+	Case example of a django-contactme form using django-crispy-forms and Twitter-bootstrap3.
+      </p>
+    </div>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

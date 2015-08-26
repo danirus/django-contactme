@@ -1,0 +1,10 @@
+{% extends "django_contactme/base.html" %}
+{% load contactme %}
+
+{% block content %}
+<h4>Get in contact</h4>
+<p>Either write me an email at someone@example.com, or fill in the following form and click on the send button:</p>
+<div class="well well-lg">
+  {% render_contact_form %}
+</div>
+{% endblock %}

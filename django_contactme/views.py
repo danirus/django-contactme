@@ -12,9 +12,8 @@ from django.views.decorators.http import require_GET, require_POST
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
-from django_contactme import signals, signed
+from django_contactme import get_form, signals, signed
 from django_contactme.models import ContactMsg
-from django_contactme.forms import ContactMsgForm
 from django_contactme.utils import send_mail
 
 
@@ -99,8 +98,8 @@ def post_contact_form(request, next=None,
     # Do we want to preview the message?
     preview = "preview" in data
 
-    # Construct the ContactMsgForm
-    form = ContactMsgForm(data=data)
+    # Construct the form
+    form = get_form()(data=data)
 
     # Check security information
     if form.security_errors():

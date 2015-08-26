@@ -33,7 +33,7 @@ Quick start
 
 1. Add ``django_contactme`` to ``INSTALLED_APPS``.
 2. Add ``url(r'^contact/', include('django_contactme.urls'))`` to your root URLconf.
-3. ``syncdb``, ``runserver``, and
+3. ``migrate``, ``runserver``, and
 4. Hit http://localhost:8000/contact/ in your browser!
 
 

@@ -5,15 +5,16 @@
 import time
 import datetime
 
-from django import forms, VERSION as DJANGO_VERSION
-if DJANGO_VERSION[:2] < (1, 7):
+import django
+from django import forms
+if django.VERSION[:2] < (1, 7):
     from django.forms.util import ErrorDict
 else:
     from django.forms.utils import ErrorDict
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.translation import ugettext_lazy as _
 
-from django_contactme.models import CONTACTME_MSG_MAX_LEN
+from django_contactme.conf import settings
 
 
 class ContactMsgSecurityForm(forms.Form):
@@ -87,7 +88,7 @@ class ContactMsgForm(ContactMsgSecurityForm):
     message = forms.CharField(label=_('Message'),
                               widget=forms.Textarea(
                                   attrs={'placeholder': _('your message')}),
-                              max_length=CONTACTME_MSG_MAX_LEN)
+                              max_length=settings.CONTACTME_MSG_MAX_LENGTH)
 
     def get_instance_data(self):
         """

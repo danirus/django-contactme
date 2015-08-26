@@ -6,8 +6,8 @@ def homepage_v(request):
     return render("homepage.html", context_instance=RequestContext(request))
 
 
-def contact_v(request):
-    return render("contact.html", context_instance=RequestContext(request))
+# def contact_v(request):
+#     return render("contact.html", context_instance=RequestContext(request))
 
 # --------------------------------------------------
 from datetime import datetime, timedelta
