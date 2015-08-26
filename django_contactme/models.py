@@ -23,7 +23,8 @@ class ContactMsg(models.Model):
     site = models.ForeignKey(Site)
     name = models.CharField(_("Contact's name"), max_length=100)
     email = models.EmailField(_("Contact's email address"))
-    message = models.TextField(_("Message"), max_length=settings.CONTACTME_MSG_MAX_LENGTH)
+    message = models.TextField(_("Message"),
+                               max_length=settings.CONTACTME_MSG_MAX_LENGTH)
     submit_date = models.DateTimeField(_("Date/Time submitted"), default=None)
     ip_address = ip_address_field_type(_('IP address'), blank=True, null=True)
 

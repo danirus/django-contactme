@@ -1,4 +1,3 @@
-#-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import os
@@ -14,11 +13,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.sqlite3', 
+        'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     'django_contactme_test',
-        'USER':     '', 
-        'PASSWORD': '', 
-        'HOST':     '', 
+        'USER':     '',
+        'PASSWORD': '',
+        'HOST':     '',
         'PORT':     '',
     }
 }
@@ -72,7 +71,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'django_contactme.tests.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(os.path.dirname(__file__), "..", "templates"),
