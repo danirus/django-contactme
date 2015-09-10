@@ -41,7 +41,6 @@ setup(
         'Framework :: Django :: 1.7',
         'Framework :: Django :: 1.8',
     ],
-    # test_suite = "dummy",
     include_package_data=True,
     cmdclass={'test': TestCommand},
 )

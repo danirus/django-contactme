@@ -1,6 +1,7 @@
-from django_contactme.forms import ContactMsgForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Field, Fieldset, Layout, Submit
+
+from django_contactme.forms import ContactMsgForm
 
 
 class CrispyContactMsgForm(ContactMsgForm):

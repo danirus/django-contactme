@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrajs %}
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="{% static 'django_contactme/js/jqueryplugin.js' %}"></script>
+<script>
+  $('#CF').djcontactme();
+</script>
+{% endblock %}

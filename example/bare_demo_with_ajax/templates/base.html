@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}django-contactme example{% endblock %}</title>
+    {% block extracss %}{% endblock %} 
+  </head>
+  <body>
+    <h1>django-contactme<br/>bare demo with ajax</h1>
+    <p>The bare minimum django-contactme app with Ajax.
+      <ol>
+	<li>No CSS design</li>
+	<li>With a JavaScript Jquery plugin to handle the submission.</li>
+      </ol>
+    </p>
+
+    {% block content %}
+    {% endblock %}
+
+   {% block extrajs %}{% endblock %} 
+  </body>
+</html>

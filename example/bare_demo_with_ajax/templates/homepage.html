@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block content %}
+<p style="font-size:1.2em">Click on the next link to see the contact-me form:
+  <a href="{% url 'contactme-get-contact-form' %}">Contact Me</a>
+</p>
+{% endblock %}
