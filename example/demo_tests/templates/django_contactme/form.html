@@ -1,0 +1,38 @@
+{% load i18n %}
+<div class="djcontactme">
+  <div style="background:#999; color:white" class="djcontactme-msg">
+  </div>
+  
+  <form id="CF" action="{% url 'contactme-post-contact-form' %}" method="post"
+	data-ajax-action="{% url 'contactme-post-ajax-contact-form' %}"
+	class="django-contactme-form">
+    {% csrf_token %}
+    
+    <div class="errors" style="display: none"><p>{% blocktrans count form.errors|length as counter %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}</p></div>
+    
+    {% if next %}
+    <div><input type="hidden" name="next" value="{{ next }}" /></div>
+    {% endif %}
+    
+    {% for field in form %}
+    {% if field.is_hidden %}
+    <div style="display:none">{{ field }}</div>
+    {% else %}
+    <div {% if field.errors %} class="error"{% endif %}
+	 {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+      {% ifequal field.name "message" %}
+      {{ field }}
+      {% else %}
+      {{ field.label_tag }} {{ field }} <span class="help_text">{{ field.help_text }}</span>
+      {% endifequal %}
+    </div>
+    {% if field.errors %}{{ field.errors }}{% endif %}
+    {% endif %}
+    {% endfor %}
+    
+    <p>
+      <input type="submit" name="post" value="{% trans 'post' %}" />
+      <input type="submit" name="preview" value="{% trans 'preview' %}" />
+    </p>
+  </form>
+</div>

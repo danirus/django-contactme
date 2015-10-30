@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}django-contactme example{% endblock %}</title>
+    {% block extracss %}{% endblock %} 
+  </head>
+  <body>
+    <h1>django-contactme<br/>bare demo with ajax</h1>
+    <p>The bare minimum django-contactme app with Ajax.
+      <ol>
+	<li>No CSS design</li>
+	<li>With a JavaScript Jquery plugin to handle the submission.</li>
+	<li>Email addresses containing the substring "xxx" will be rejected by using a hook for the django-contactme signal <code>confirmation_will_be_requested</code>. The signal is raised before the confirmation is sent. The hook is called <code>reject_email_with_xxx</code> and lives in the <code>views.py</code> module of this very demo.</li>
+	<li>Customise all the messages overriding django-contactme templates.</li>
+      </ol>
+    </p>
+
+    {% block content %}
+    {% endblock %}
+
+   {% block extrajs %}{% endblock %} 
+  </body>
+</html>

@@ -1,7 +1,8 @@
-#-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import os
+
+PRJ_PATH = os.path.abspath(os.path.curdir)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -14,11 +15,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.sqlite3', 
+        'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     'django_contactme_test',
-        'USER':     '', 
-        'PASSWORD': '', 
-        'HOST':     '', 
+        'USER':     '',
+        'PASSWORD': '',
+        'HOST':     '',
         'PORT':     '',
     }
 }
@@ -54,6 +55,26 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+STATIC_URL = "/static/"
+
+STATIC_ROOT = os.path.join(PRJ_PATH, "static")
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PRJ_PATH, '..', "static"),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 SECRET_KEY = 'v2824l&2-n+4zznbsk9c-ap5i)b3e8b+%*a=dxqlahm^%)68jn'
 
 # List of callables that know how to import templates from various sources.
@@ -65,24 +86,33 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
 ROOT_URLCONF = 'django_contactme.tests.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.dirname(__file__), "templates"),
     os.path.join(os.path.dirname(__file__), "..", "templates"),
 )
 
 INSTALLED_APPS = [
     'django.contrib.sites',
+    'django.contrib.staticfiles',
+
     'django_contactme',
     'django_contactme.tests',
 ]
+
+DEFAULT_FROM_EMAIL = "Alice Bloggs <alice@example.com>"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CONTACTME_SALT = b"es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
 CONTACTME_NOTIFY_TO = "Joe Bloggs <joe.bloggs@example.com>"

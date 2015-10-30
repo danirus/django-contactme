@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
 
+import json
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, Http404
+from django.http import (HttpResponse, HttpResponseRedirect,
+                         HttpResponseBadRequest, Http404)
 from django.shortcuts import render_to_response
 from django.template import loader, Context, RequestContext
 from django.template.loader import render_to_string
@@ -12,9 +15,8 @@ from django.views.decorators.http import require_GET, require_POST
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
-from django_contactme import signals, signed
+from django_contactme import get_form, signals, signed
 from django_contactme.models import ContactMsg
-from django_contactme.forms import ContactMsgForm
 from django_contactme.utils import send_mail
 
 
@@ -99,8 +101,8 @@ def post_contact_form(request, next=None,
     # Do we want to preview the message?
     preview = "preview" in data
 
-    # Construct the ContactMsgForm
-    form = ContactMsgForm(data=data)
+    # Construct the form
+    form = get_form()(data=data)
 
     # Check security information
     if form.security_errors():
@@ -111,9 +113,7 @@ def post_contact_form(request, next=None,
     # If there are errors or if we requested a preview show the comment
     if form.errors or preview:
         return render_to_response(template_preview,
-                                  {"message": form.data.get("message", ""),
-                                   "form": form,
-                                   "next": next},
+                                  {"form": form, "next": next},
                                   RequestContext(request, {}))
 
     contact_msg_data = form.get_instance_data()
@@ -144,6 +144,81 @@ def post_contact_form(request, next=None,
 
     return render_to_response(template_post,
                               context_instance=RequestContext(request))
+
+
+@csrf_protect
+@require_POST
+def post_ajax_contact_form(
+        request,
+        template_preview="django_contactme/preview_ajax.html",
+        template_discarded="django_contactme/discarded_ajax.html",
+        template_post="django_contactme/confirmation_sent_ajax.html",
+        template_field_errors="django_contactme/field_errors.html"):
+    """
+    Post a contact message via AJAX.
+
+    HTTP POST is required. If ``POST['submit'] == "preview"`` or if there are
+    errors a preview template, ``django_contactme/ajax_preview.html``, will
+    be rendered.
+    """
+    if not request.is_ajax():
+        return HttpResponseBadRequest("Bad request, AJAX call expected.")
+
+    post_data = request.POST.copy()
+    preview = "preview" in post_data  # want to preview the message?
+    form = get_form()(data=post_data)  # Construct the form
+
+    # Check security information
+    if form.security_errors():
+        return ContactMsgPostBadRequest(
+            "The contact message form failed security verification: %s" %
+            escape(str(form.security_errors())))
+
+    json_data = {}
+    if form.errors:
+        json_data.update({'status': 'errors', 'errors': {}})
+        for field_name in form.errors:
+            json_data['errors'][field_name] = render_to_string(
+                template_field_errors,
+                {'field': form[field_name]},
+                RequestContext(request, {}))
+
+    if preview or form.errors:
+        json_data['html'] = render_to_string(template_preview, {'form': form})
+        if not form.errors:
+            json_data['status'] = 'preview'
+        return HttpResponse(json.dumps(json_data),
+                            content_type='application/json')
+
+    contact_msg_data = form.get_instance_data()
+
+    # Signal that a confirmation is about to be requested
+    responses = signals.confirmation_will_be_requested.send(
+        sender=form.__class__, data=contact_msg_data, request=request)
+
+    # Check whether a signal receiver decides to kill the process
+    for (receiver, response) in responses:
+        if response is False:
+            html = render_to_string(template_discarded,
+                                    {'data': contact_msg_data},
+                                    context_instance=RequestContext(request))
+            payload = json.dumps({'status': 'discarded', 'html': html})
+            return HttpResponse(payload, content_type='application/json')
+
+    # Create key and send confirmation URL by email
+    key = signed.dumps(contact_msg_data, compress=True,
+                       extra_key=settings.CONTACTME_SALT)
+    send_confirmation_email(contact_msg_data, key)
+
+    # Signal that a confirmation has been requested
+    signals.confirmation_requested.send(sender=form.__class__,
+                                        data=contact_msg_data,
+                                        request=request)
+
+    html = render_to_string(template_post,
+                            context_instance=RequestContext(request))
+    payload = json.dumps({'status': 'success', 'html': html})
+    return HttpResponse(payload, content_type='application/json')
 
 
 def confirm_contact(request, key,

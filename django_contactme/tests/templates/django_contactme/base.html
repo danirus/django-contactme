@@ -1,0 +1,22 @@
+/Users/danirus/Code/Repos/django-contactme/django_contactme/tests/templates/django_contactme/base.html<!DOCTYPE html>
+{% load static %}
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>django-contactme qunit tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+  </head>
+  <body>
+    <div id="qunit"></div>
+    
+    {% block content %}
+    {% endblock %}
+
+    <script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="{% static 'django_contactme/js/jquery.djcontactme.js' %}"></script>
+    <script>
+      $('#CF').djcontactme();
+    </script>
+  </body>
+</html>

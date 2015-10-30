@@ -4,9 +4,10 @@ from setuptools.command.test import test
 
 class TestCommand(test):
     def run(self):
-        import pytest
+        import django, pytest
         from django_contactme.tests import setup_django_settings
         setup_django_settings()
+        django.setup()
         pytest.main(['-v',])
 
 setup(
@@ -41,7 +42,6 @@ setup(
         'Framework :: Django :: 1.7',
         'Framework :: Django :: 1.8',
     ],
-    # test_suite = "dummy",
     include_package_data=True,
     cmdclass={'test': TestCommand},
 )

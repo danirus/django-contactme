@@ -3,12 +3,10 @@ import datetime
 from django import VERSION as DJANGO_VERSION
 
 from django.db import models
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
-
-CONTACTME_MSG_MAX_LEN = getattr(settings, 'CONTACTME_MSG_MAX_LEN', 3000)
+from django_contactme.conf import settings
 
 
 # field type IPAddressField deprecated as of django version 1.7
@@ -25,7 +23,8 @@ class ContactMsg(models.Model):
     site = models.ForeignKey(Site)
     name = models.CharField(_("Contact's name"), max_length=100)
     email = models.EmailField(_("Contact's email address"))
-    message = models.TextField(_("Message"), max_length=CONTACTME_MSG_MAX_LEN)
+    message = models.TextField(_("Message"),
+                               max_length=settings.CONTACTME_MSG_MAX_LENGTH)
     submit_date = models.DateTimeField(_("Date/Time submitted"), default=None)
     ip_address = ip_address_field_type(_('IP address'), blank=True, null=True)
 
