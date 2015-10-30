@@ -156,9 +156,10 @@ def post_ajax_contact_form(
         template_field_errors="django_contactme/field_errors.html"):
     """
     Post a contact message via AJAX.
-    
+
     HTTP POST is required. If ``POST['submit'] == "preview"`` or if there are
-    errors a preview template, ``django_contactme/ajax_preview.html``, will be rendered.
+    errors a preview template, ``django_contactme/ajax_preview.html``, will
+    be rendered.
     """
     if not request.is_ajax():
         return HttpResponseBadRequest("Bad request, AJAX call expected.")
@@ -188,7 +189,7 @@ def post_ajax_contact_form(
             json_data['status'] = 'preview'
         return HttpResponse(json.dumps(json_data),
                             content_type='application/json')
-            
+
     contact_msg_data = form.get_instance_data()
 
     # Signal that a confirmation is about to be requested
@@ -203,7 +204,7 @@ def post_ajax_contact_form(
                                     context_instance=RequestContext(request))
             payload = json.dumps({'status': 'discarded', 'html': html})
             return HttpResponse(payload, content_type='application/json')
-    
+
     # Create key and send confirmation URL by email
     key = signed.dumps(contact_msg_data, compress=True,
                        extra_key=settings.CONTACTME_SALT)

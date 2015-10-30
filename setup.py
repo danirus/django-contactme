@@ -4,9 +4,10 @@ from setuptools.command.test import test
 
 class TestCommand(test):
     def run(self):
-        import pytest
+        import django, pytest
         from django_contactme.tests import setup_django_settings
         setup_django_settings()
+        django.setup()
         pytest.main(['-v',])
 
 setup(

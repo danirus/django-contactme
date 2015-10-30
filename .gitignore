@@ -9,3 +9,6 @@ build/
 dist/
 .emacs.desktop*
 .tox
+.cache
+ghostdriver.log
+npm-debug.log

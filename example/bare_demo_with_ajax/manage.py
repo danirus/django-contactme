@@ -3,7 +3,7 @@ import os
 import sys
 
 sys.path.insert(0, '../..')  # parent of django_contactme directory
-sys.path.insert(0, '..')  # bare_demo directory
+sys.path.insert(0, '..')  # bare_demo_with_ajax directory
 
 if __name__ == "__main__":
     from django.core.management import execute_from_command_line
@@ -19,5 +19,6 @@ if __name__ == "__main__":
                          "module.\n" % __file__)
         sys.exit(1)
 
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bare_demo_with_ajax.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+                          "bare_demo_with_ajax.settings")
     execute_from_command_line(sys.argv)

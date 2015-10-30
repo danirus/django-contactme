@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load contactme %}
+
+{% block extracss %}
+<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+{% endblock %}
+
+{% block content %}
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<div style="margin:20px">
+  <h4>django-contactme app - testing jquery plugin</h4>
+  {% render_contact_form %}
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="http://code.jquery.com/qunit/qunit-1.20.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="{% static 'django_contactme/js/jquery.djcontactme.js' %}"></script>
+<script>
+  QUnit.test("submit form with empty fields", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.equal($("input[name=name]").parent().attr('class'), "error",
+                   "Field 'name' wrapped in a div with class='error'");
+      assert.equal($("input[name=email]").parent().attr('class'), "error",
+                   "Field 'email' wrapped in a div with class='error'");
+      assert.equal($("textarea").parent().attr('class'), "error",
+                   "Field 'message' wrapped in a div with class='error'");
+      done();
+    }
+    $('input[name=name]').val('');
+    $('input[name=email]').val('');
+    $('textarea').val('');
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=post]').click();
+  });
+
+  QUnit.test("submit form leaving field 'name' empty", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.equal($("input[name=name]").parent().attr('class'), "error",
+                   "Field 'name' wrapped in a div with class='error'");
+      assert.notEqual($("input[name=email]").parent().attr('class'), "error",
+                      "Field 'email' not wrapped in a div with class='error'");
+      assert.notEqual($("textarea").parent().attr('class'), "error",
+                     "Field 'message' not wrapped in a div with class='error'");
+      done();
+    }
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=name]').val('');
+    $('input[name=email]').val('joe.bloggs@example.com');
+    $('textarea').val('This is the text of the message');
+    $('input[name=post]').click();
+  });
+
+  QUnit.test("submit form leaving field 'email' empty", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.notEqual($("input[name=name]").parent().attr('class'), "error",
+                      "Field 'name' not wrapped in a div with class='error'");
+      assert.equal($("input[name=email]").parent().attr('class'), "error",
+                   "Field 'email' wrapped in a div with class='error'");
+      assert.notEqual($("textarea").parent().attr('class'), "error",
+                     "Field 'message' not wrapped in a div with class='error'");
+      done();
+    }
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=name]').val('Joe Bloggs');
+    $('input[name=email]').val('');
+    $('textarea').val('This is the text of the message');
+    $('input[name=post]').click();
+  });
+
+  QUnit.test("submit form in preview without message", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.notEqual($("input[name=name]").parent().attr('class'), "error",
+                      "Field 'name' not wrapped in a div with class='error'");
+      assert.notEqual($("input[name=email]").parent().attr('class'), "error",
+                      "Field 'email' not wrapped in a div with class='error'");
+      assert.equal($("textarea").parent().attr('class'), "error",
+                   "Field 'message' wrapped in a div with class='error'");
+      done();
+    }
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=name]').val('Joe Bloggs');
+    $('input[name=email]').val('joe.bloggs@example.com');
+    $('textarea').val('');
+    $('input[name=preview]').click();
+  });
+
+  QUnit.test("submit form in preview", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.equal($(".djcontactme-msg").length, 1,
+                   "There is a div with class 'djcontactme-msg'");
+      done();
+    }
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=name]').val('Joe Bloggs');
+    $('input[name=email]').val('joe.bloggs@example.com');
+    $('textarea').val("This is the contact message");
+    $('input[name=preview]').click();  
+  });
+
+  QUnit.test("submit form", function(assert) {
+    var done = assert.async();
+    function onsuccess() {
+      assert.equal($(".djcontactme").length, 1,
+                   "There is a div with class 'djcontactme'");
+      var position = $(".djcontactme")
+                       .text()
+                       .indexOf("Please, confirm your email address");
+      assert.notEqual(position, -1, "There is a confirmation message");
+      done();
+    }
+    $('#CF').djcontactme({onSuccessCallback: onsuccess});
+    $('input[name=name]').val('Joe Bloggs');
+    $('input[name=email]').val('joe.bloggs@example.com');
+    $('textarea').val("This is the contact message");
+    $('input[name=post]').click();  
+  });
+</script>
+{% endblock %}

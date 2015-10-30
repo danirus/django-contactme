@@ -16,10 +16,13 @@ def run_tests():
 
     if django.VERSION[1] >= 7: # Django 1.7.x or above
         django.setup()
-        runner = get_runner(settings,"django.test.runner.DiscoverRunner")
+        runner = get_runner(settings,
+                            "django.test.runner.DiscoverRunner")
     else:
-        runner = get_runner(settings,"django.test.simple.DjangoTestSuiteRunner")
+        runner = get_runner(settings,
+                            "django.test.simple.DjangoTestSuiteRunner")
     test_suite = runner(verbosity=2, interactive=True, failfast=False)
+    # return test_suite.run_tests(["django_contactme.tests.test_jqueryplugin"])
     return test_suite.run_tests(["django_contactme"])
 
 

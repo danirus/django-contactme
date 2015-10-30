@@ -3,13 +3,13 @@
 {% block content %}
 <h4>Get in contact</h4>
 <p>Either write me an email at someone@example.com, or fill in the following form and click on the send button:</p>
-{% if message %}
+{% if form.message.value %}
 <div class="row">
   <div class="col-lg-offset-1 col-md-offset-1 col-lg-10 col-md-10">
     <div class="panel panel-default">
       <div class="panel-heading">Preview your message</div>
       <div class="panel-body">
-	{{ message|linebreaks }}
+	{{ form.message.value|linebreaks }}
       </div>
     </div>
   </div>
