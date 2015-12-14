@@ -12,7 +12,7 @@ class TestCommand(test):
 
 setup(
     name = "django-contactme",
-    version = "1.2.1",
+    version = "1.2.2",
     packages = find_packages(),
     license = "MIT",
     description = "Django pluggable contact form app with email verification.",
