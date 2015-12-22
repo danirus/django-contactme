@@ -5,7 +5,6 @@ import os
 PRJ_PATH = os.path.abspath(os.path.curdir)
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -41,72 +40,42 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
-
 STATIC_URL = "/static/"
-
-STATIC_ROOT = os.path.join(PRJ_PATH, "static")
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PRJ_PATH, '..', "static"),
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 SECRET_KEY = 'v2824l&2-n+4zznbsk9c-ap5i)b3e8b+%*a=dxqlahm^%)68jn'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 ROOT_URLCONF = 'django_contactme.tests.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates"
-    # or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(os.path.dirname(__file__), "templates"),
-    os.path.join(os.path.dirname(__file__), "..", "templates"),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+	'DIRS': [
+	    os.path.join(os.path.dirname(__file__), "templates"),
+	    os.path.join(os.path.dirname(__file__), "..", "templates"),
+	],
+        'APP_DIRS': True,
+	'OPTIONS': {
+	    'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+	    ],
+	},
+    },
+]
 
 INSTALLED_APPS = [
+    'django_contactme.apps.ContactMeConfig',
+    'django_contactme.tests.apps.ContactMeTestsConfig',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-
-    'django_contactme',
-    'django_contactme.tests',
 ]
 
 DEFAULT_FROM_EMAIL = "Alice Bloggs <alice@example.com>"

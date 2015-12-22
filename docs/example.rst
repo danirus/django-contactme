@@ -1,32 +1,44 @@
 .. _ref-example:
 
-============
-Demo project
-============
+=============
+Demo projects
+=============
 
-django-contactme comes with a demo project to see the app in action.
+The source package of django-contactme comes with several demo projects to see the application in action:
+
+ * **bare_demo** is the simplest demo possible.
+ * **bare_demo_with_ajax** is the same previous example plus Ajax functionality provided by ``jquery.djcontactme.js``, the jquery plugin that comes with the application.
+ * **crispy_forms_demo** is an example of how to use django-contactme with `django-crispy-forms <http://django-crispy-forms.readthedocs.org/en/latest/>`_.
 
 
 Demo quick setup
 ================
 
-1. ``cd`` into the ``demo`` directory
-2. ``python manage syncdb`` will create a simple SQLite db file for the demo.
-3. Run the server ``python manage runserver`` and browse http://localhost:8000
+Demo projects live inside the ``example`` project in app's root directory.
 
+The simplest and less interfeing way to run the demo projects is by creating a virtualenv for django-contactme. Then:
+
+1. ``cd`` into the any of the demo directories.
+2. Run ``python manage migrate`` to create a minimal SQLite db for the demo.
+3. Run ``python manage runserver`` and browse http://localhost:8000
+
+In addition, **crispy_forms_demo** requires the **crispy_forms** package::
+
+  $ pip install django-crispy-forms
+  
 
 Email settings
 ==============
 
-By default the demo project send email messages to the standard output. You can customize a few email settings to allow django sending emails. This will allow you to receive email messages with confirmation URLs that actually work.
+By default the demo project send email messages to the standard output. You can customize the email settings to send actual emails.
 
-Edit the ``demo/settings.py`` file, go to the end of the file and customize the following settings. Provide actual values of your email address and email provider::
+Edit the ``settings.py`` module, go to the end of the file and customize the following entries::
 
-    EMAIL_HOST          = "" # gmail: "smtp.gmail.com"
-    EMAIL_PORT          = "" # gmail: "587"
-    EMAIL_HOST_USER     = "" # gmail: user@gmail.com
+    EMAIL_HOST          = "" # for gmail it would be: "smtp.gmail.com"
+    EMAIL_PORT          = "" # for gmail: "587"
+    EMAIL_HOST_USER     = "" # for gmail: user@gmail.com
     EMAIL_HOST_PASSWORD = ""
-    EMAIL_USE_TLS       = True # gmail
+    EMAIL_USE_TLS       = True # for gmail
 
     DEFAULT_FROM_EMAIL  = "Your site name <user@gmail.com>"
     SERVER_EMAIL        = DEFAULT_FROM_EMAIL
@@ -38,7 +50,7 @@ Edit the ``demo/settings.py`` file, go to the end of the file and customize the 
     CONTACTME_NOTIFY_TO = "Your name <user@gmail.com>"
 
 
-The domain used in the links sent by email refers to `example.com` and thus are not associated with your django development web server. Enter in the admin UI and change the domain name to something like `localhost:8000`.
+The domain used in the links sent by email refers to `example.com` and thus are not associated with your django development web server. Change the domain name through the admin interface, sites application, to something like `localhost:8000` so that URLs in email messages match your development server.
 
 
 Register a signal receiver
@@ -46,6 +58,4 @@ Register a signal receiver
 
 After trying the demo site you may like to add a receiver for any of the signals sent during the workflow.
 
-Read the :doc:`signals` to know more about django-contactme signals.
-
-Read the :ref:`signals-and-receivers-label` in the Tutorial to see an example.
+Read the entry on :doc:`signals` to know more about django-contactme signals. The section :ref:`signals-and-receivers-label` in the Tutorial shows a use case.
