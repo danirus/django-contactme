@@ -4,13 +4,13 @@
 Tutorial
 ========
 
-django-contactme is a reusable app that relies on its own code and doesn't require any other extra app.
+django-contactme is a simple reusable app. This is a tutorial as simple as the app itself.
 
 
 Installation
 ============
 
-Installing django-contactme is as simple as checking out the source and adding it to your project or ``PYTHONPATH``.
+Installing django-contactme is just a matter of checking out the package and adding it to your project or ``PYTHONPATH``.
 
 Use git, pip or easy_install to check out django-contactme from Github_ or get a release from PyPI_:
 
@@ -22,9 +22,7 @@ Use git, pip or easy_install to check out django-contactme from Github_ or get a
 
   2. Or use **pip** (read more about pip_):
 
-    * Do ``pip install django-contactme``, or
-
-    * Edit your project's ``requirements`` file and append either the Github_ URL or the package name ``django-contactme``, and then do ``pip install -r requirements``.
+    * Do ``pip install django-contactme``
 
   3. Or use **easy_install** (read more about easy_install_): 
 
@@ -47,7 +45,7 @@ Configuration
 
 3. Create a ``django_contactme`` directory in your templates directory and copy the default templates from django-contactme into the new created directory.
 
-4. Run ``python manage.py syncdb`` that creates the ``contactme_contact_msg`` table.
+4. Run ``python manage.py migrate`` that creates the ``contactme_contact_msg`` table.
 
 
 Customization
@@ -55,7 +53,7 @@ Customization
 
 1. Optionally you can add some settings to control django-contactme behaviour (see :doc:`settings`), but they all have sane defaults.
 
-2. Customize the templates (see :doc:`templates`) in your ``django_contactme`` templates directory to make them fit in your design.
+2. Customize the templates (see :doc:`templates`) in your ``django_contactme`` templates directory to make them fit in your design. Look at the *crispy_forms_demo* to see an example of templates customisation.
 
 
 .. _workflow-label:
@@ -146,7 +144,7 @@ An example function receiver might check the datetime a user submitted a contact
 Extending the demo site with the following code would do the job::
 
     #----------------------------------------
-    # append the code below to demo/views.py:
+    # append the code below to any demo project views.py module:
 
     from datetime import datetime, timedelta
     from django_contactme import signals

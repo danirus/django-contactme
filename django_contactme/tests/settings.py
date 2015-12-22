@@ -40,48 +40,17 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
-
 STATIC_URL = "/static/"
-
-STATIC_ROOT = os.path.join(PRJ_PATH, "static")
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PRJ_PATH, '..', "static"),
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 SECRET_KEY = 'v2824l&2-n+4zznbsk9c-ap5i)b3e8b+%*a=dxqlahm^%)68jn'
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 ROOT_URLCONF = 'django_contactme.tests.urls'
 
@@ -97,19 +66,16 @@ TEMPLATES = [
 	    'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-		'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
 	    ],
 	},
     },
 ]
 
 INSTALLED_APPS = [
-    'django.contrib.sites',
-    'django.contrib.staticfiles',
-
     'django_contactme.apps.ContactMeConfig',
     'django_contactme.tests.apps.ContactMeTestsConfig',
+    'django.contrib.sites',
+    'django.contrib.staticfiles',
 ]
 
 DEFAULT_FROM_EMAIL = "Alice Bloggs <alice@example.com>"

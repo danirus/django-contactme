@@ -34,6 +34,8 @@ An example::
 Defaults to an empty string.
 
 
+.. _ref-CONTACTME-NOTIFY-TO:
+
 ``CONTACTME_NOTIFY_TO``
 =======================
 
