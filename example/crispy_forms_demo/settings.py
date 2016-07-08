@@ -127,7 +127,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CONTACTME_SALT = b"es-war-einmal-una-bella-princesa-in-a-beautiful-castle"
 CONTACTME_NOTIFY_TO = "Your Name <youruser@yourdomain>"
-# CONTACTME_FORM_CLASS = "crispy_forms_demo.forms.CrispyContactMsgForm"
 CONTACTME_FORM_CLASS = "crispy_forms_demo.forms.CrispyContactMsgForm"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

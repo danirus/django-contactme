@@ -158,7 +158,7 @@ def post_ajax_contact_form(
     Post a contact message via AJAX.
 
     HTTP POST is required. If ``POST['submit'] == "preview"`` or if there are
-    errors a preview template, ``django_contactme/ajax_preview.html``, will
+    errors a preview template, ``django_contactme/preview_ajax.html``, will
     be rendered.
     """
     if not request.is_ajax():

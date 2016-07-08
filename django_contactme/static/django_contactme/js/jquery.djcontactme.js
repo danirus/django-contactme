@@ -58,28 +58,28 @@
           } else if(data.status=='success') {
             $('.' + opts.confirmationSentClass).html(data.html).show();
           }
-	  if(opts.onSuccessCallback) {
-	    opts.onSuccessCallback();
-	  }	  
+	      if(opts.onSuccessCallback) {
+	        opts.onSuccessCallback();
+	      }
         },
         error: function() {
           $('.'+opts.previewClass)
-	    .html("An error ocurred while sending the form.")
-	    .show();
-	  if(opts.onErrorCallback) {
-	    opts.onErrorCallback();
-	  }
+	        .html("An error ocurred while sending the form.")
+	        .show();
+	      if(opts.onErrorCallback) {
+	        opts.onErrorCallback();
+	      }
         }
       });
     }
-    
+
     if($contactme.length > 0) {
       // Detect last active input.
       // Submit if return is hit or any button other than preview is hit.
       $contactme.find('input[type=submit]')
-	.focus(setClicked)
-	.mousedown(setClicked)
-	.click(setClicked);
+	    .focus(setClicked)
+	    .mousedown(setClicked)
+	    .click(setClicked);
       $contactme.submit(submitForm);
     }
   };
@@ -95,5 +95,4 @@
     discardedClass: "djcontactme-msg",
     confirmationSentClass: "djcontactme"
   }
-  
 })(jQuery);
